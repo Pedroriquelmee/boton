@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Máquina de Boxeo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: red;
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 5vw; /* Usar unidades relativas para ser responsive */
+            font-weight: bold;
+            text-align: center;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        #score {
+            position: absolute;
+        }
+
+        @media (max-width: 768px) {
+            body, html {
+                font-size: 8vw; /* Aumentar el tamaño de fuente en pantallas más pequeñas */
+            }
+        }
+    </style>
+</head>
+<body onclick="generateScore()">
+    <div id="score">¡Golpea!</div>
+
+    <script>
+        function generateScore() {
+            let randomScore = Math.floor(Math.random() * (999 - 100 + 1)) + 100;
+            let currentScore = 100; // Comenzamos desde 100
+            const increment = Math.ceil((randomScore - currentScore) / 50); // Incremento para la animación
+            const scoreElement = document.getElementById("score");
+
+            // Limpiamos el texto inicial
+            scoreElement.textContent = currentScore;
+
+            const interval = setInterval(() => {
+                currentScore += increment; // Incrementamos el puntaje actual
+
+                // Aseguramos que no exceda el puntaje aleatorio
+                if (currentScore >= randomScore) {
+                    currentScore = randomScore;
+                    clearInterval(interval); // Detenemos el intervalo
+                }
+
+                scoreElement.textContent = currentScore; // Actualizamos el texto
+            }, 30); // Cambiado a 30 ms para una animación más rápida
+        }
+    </script>
+</body>
+</html>
